@@ -1,4 +1,5 @@
 {
+    "$schemaVersion": "1.0", 
     "formId": "irs-w2-2025",
     "formVersion": "2025",
     "pageDetails": {
@@ -298,7 +299,8 @@
                     "format": {
                         "style": "plain"
                     },
-                    "offsetX": 0
+                    "offsetX": 0,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "amount",
@@ -308,7 +310,8 @@
                         "decimalPlaces": 2,
                         "thousandsSeparator": true
                     },
-                    "offsetX": 20
+                    "offsetX": 20,
+                    "offsetY": 0
                 }
             ]
         },
@@ -324,9 +327,7 @@
                 "x": 40,
                 "y": 400.0,
                 "width": 400.0,
-                "height": 16.0,
-                "unit": "pt",
-                "origin": "top-left"
+                "height": 16.0
             },
             "template": [
                 {
@@ -335,7 +336,8 @@
                     "format": {
                         "style": "plain"
                     },
-                    "offsetX": 0
+                    "offsetX": 0,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "employerStateId",
@@ -343,7 +345,8 @@
                     "format": {
                         "style": "plain"
                     },
-                    "offsetX": 30
+                    "offsetX": 30,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "stateWages",
@@ -354,7 +357,8 @@
                         "thousandsSeparator": true,
                         "align": "right"
                     },
-                    "offsetX": 100
+                    "offsetX": 100,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "stateIncomeTax",
@@ -365,7 +369,8 @@
                         "thousandsSeparator": true,
                         "align": "right"
                     },
-                    "offsetX": 190
+                    "offsetX": 190,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "localWages",
@@ -376,7 +381,8 @@
                         "thousandsSeparator": true,
                         "align": "right"
                     },
-                    "offsetX": 280
+                    "offsetX": 280,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "localIncomeTax",
@@ -387,7 +393,8 @@
                         "thousandsSeparator": true,
                         "align": "right"
                     },
-                    "offsetX": 340
+                    "offsetX": 340,
+                    "offsetY": 0
                 }
             ]
         }

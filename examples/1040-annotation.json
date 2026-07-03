@@ -1,4 +1,5 @@
 {
+    "schemaVersion": "1.0",
     "formId": "irs-1040-2025",
     "formVersion": "2025",
     "pageDetails": {
@@ -90,7 +91,8 @@
                     "format": {
                         "style": "plain"
                     },
-                    "offsetX": 0
+                    "offsetX": 0,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "ssn",
@@ -98,7 +100,8 @@
                     "format": {
                         "style": "ssn"
                     },
-                    "offsetX": 150
+                    "offsetX": 150,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "relationship",
@@ -106,7 +109,8 @@
                     "format": {
                         "style": "plain"
                     },
-                    "offsetX": 260
+                    "offsetX": 260,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "childTaxCredit",
@@ -115,7 +119,8 @@
                         "style": "checkmark",
                         "checkedSymbol": "X"
                     },
-                    "offsetX": 380
+                    "offsetX": 380,
+                    "offsetY": 0
                 },
                 {
                     "fieldId": "creditForOtherDependents",
@@ -124,7 +129,8 @@
                         "style": "checkmark",
                         "checkedSymbol": "X"
                     },
-                    "offsetX": 420
+                    "offsetX": 420,
+                    "offsetY": 0
                 }
             ]
         },

@@ -19,6 +19,7 @@ An annotation file describes one form. A form is just a named list of fields.
 
 ```json
 {
+    "schemaVersion": "1.0",
     "formId": "w2-2026",
     "formVersion": "2026",
     "pageDetails": {
@@ -35,19 +36,20 @@ An annotation file describes one form. A form is just a named list of fields.
 
 | Property | Type | Description |
 |---|---|---|
+| `schemaVersion` | string | Version of the schema used for particular form |
 | `formId` | string | Unique name for the form template (e.g. `w2-2026`, `1040-2026`) |
 | `formVersion` | string | Tax year or revision, since forms can change |
 | `pageDetails` | object | The details about pages |
 | `fields` | array | List of Field Annotation objects, see section 3 |
 
 
-**`PageSize` object:**
+**`PageDetails` object:**
 
 | Property | Type | Description |
 |---|---|---|
 | `width` | number | Page width, in `unit` |
 | `height` | number | Page height, in `unit` |
-| `unit` | enum | Same units as section 4: `pt`, `in`, `mm`, `px` |
+| `unit` | enum | Units `pt`, `in`, `mm`, `px` |
 | `origin` | enum | `top-left` (default) or `bottom-left`|
 
 ---
@@ -66,9 +68,7 @@ Every box on a form is one Field Annotation object, made up of four parts: ident
         "x": 412.5,
         "y": 88.0,
         "width": 90.0,
-        "height": 14.0,
-        "unit": "pt",
-        "origin": "top-left"
+        "height": 14.0
     },
     "format": {
         "style": "currency",
@@ -182,7 +182,8 @@ Some boxes are really a template that repeats once per item in an array, like W-
             "format": {
                 "style": "plain"
             },
-            "offsetX": 0
+            "offsetX": 0,
+            "offsetY": 0,
         },
         {
             "fieldId": "amount",
@@ -190,7 +191,8 @@ Some boxes are really a template that repeats once per item in an array, like W-
             "format": {
                 "style": "currency"
             },
-            "offsetX": 20
+            "offsetX": 20,
+            "offsetY": 0,
         }
     ]
 }
@@ -203,7 +205,7 @@ A `repeatingGroup` field adds these properties on top of the base shape:
 | Property | Type | Description |
 |---|---|---|
 | `maxInstances` | integer | The most rows the renderer will draw, even if the array has more items than that. Keeps things from overflowing the page |
-| `rowHeight` | number | Vertical space between rows, added to `position.y` for each one, in the same `unit` as `position` |
+| `rowHeight` | number | Vertical space between rows, added to `position.y` for each one, in the same `unit` as `pageDetails` |
 | `template` | array of `TemplateField` | The fields drawn once per array item, see the shape below |
 
 **`TemplateField` object:**
@@ -213,7 +215,8 @@ A `repeatingGroup` field adds these properties on top of the base shape:
 | `fieldId` | string | Unique key for this field within the template |
 | `dataRef` | string | Path resolved against the current array item, not the document root |
 | `format` | object | See section 5 |
-| `offsetX` | number | Horizontal shift from `position.x`, in the same `unit` as `position` |
+| `offsetX` | number | Horizontal shift from `position.x`, in the same `unit` as `pageDetails` |
+| `offsetY` | number | Horizontal shift from `position.x`, in the same `unit` as `pageDetails` |
 
 A `repeatingGroup` field doesn't use a top-level `format`. Each column inside `template` gets its own, since a code column and an amount column usually need different formatting.
 

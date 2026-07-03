@@ -5,6 +5,7 @@
     "description": "Schema for an annotation file describing where values go on a tax form, how they are formatted, and which nested data they reference.",
     "type": "object",
     "required": [
+        "schemaVersion",
         "formId",
         "formVersion",
         "pageDetails",
@@ -12,16 +13,21 @@
     ],
     "additionalProperties": false,
     "properties": {
+        "schemaVersion": {
+            "type": "string",
+            "description": "Version of the schema",
+            "pattern": "^\\d+\\.\\d+$"
+        },
         "formId": {
             "type": "string",
             "description": "Unique identifier for the form template (e.g. irs-w2-2025, irs-1040-2025)"
         },
         "formVersion": {
             "type": "string",
-            "description": "Tax year / revision, since forms change annually"
+            "description": "Tax year / revision, since forms can change annually"
         },
         "pageDetails": {
-            "$ref": "#/$defs/PageSize"
+            "$ref": "#/$defs/PageDetails"
         },
         "fields": {
             "type": "array",
@@ -38,14 +44,16 @@
                 "in",
                 "mm",
                 "px"
-            ]
+            ],
+            "default": "pt"
         },
         "Origin": {
             "type": "string",
             "enum": [
                 "top-left",
                 "bottom-left"
-            ]
+            ],
+            "default": "top-left"
         },
         "PageDetails": {
             "type": "object",
@@ -179,7 +187,8 @@
             "type": "object",
             "required": [
                 "fieldId",
-                "dataRef"
+                "dataRef",
+                "format"
             ],
             "additionalProperties": false,
             "properties": {
@@ -196,6 +205,10 @@
                 "offsetX": {
                     "type": "number",
                     "default": 0
+                },
+                "offsetY": {
+                    "type": "number",
+                    "default": 0
                 }
             }
         },
@@ -203,8 +216,6 @@
             "type": "object",
             "required": [
                 "fieldId",
-                "type",
-                "position",
                 "dataRef"
             ],
             "properties": {
@@ -221,6 +232,9 @@
                 "dataRef": {
                     "type": "string",
                     "description": "JSONPath-style reference into the taxpayer data set. May be wrapped in sum(), count(), or first() for aggregation."
+                },
+                "format": {
+                    "$ref": "#/$defs/Format"
                 }
             }
         },
@@ -232,20 +246,13 @@
                 }
             ],
             "type": "object",
-            "additionalProperties": false,
+            "unevaluatedProperties": false,
             "required": [
-                "fieldId",
                 "type",
                 "position",
-                "dataRef"
+                "format"
             ],
             "properties": {
-                "fieldId": {
-                    "type": "string"
-                },
-                "label": {
-                    "type": "string"
-                },
                 "type": {
                     "type": "string",
                     "enum": [
@@ -255,43 +262,26 @@
                         "date",
                         "checkbox"
                     ]
-                },
-                "position": {
-                    "$ref": "#/$defs/Position"
-                },
-                "format": {
-                    "$ref": "#/$defs/Format"
-                },
-                "dataRef": {
-                    "type": "string"
                 }
             }
         },
         "CheckboxGroupField": {
             "description": "Mutually-exclusive checkbox options; one dataRef resolved once against a list of matchValues.",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/BaseField"
+                }
+            ],
             "type": "object",
-            "additionalProperties": false,
+            "unevaluatedProperties": false,
             "required": [
-                "fieldId",
                 "type",
-                "dataRef",
-                "options"
+                "options",
+                "format"
             ],
             "properties": {
-                "fieldId": {
-                    "type": "string"
-                },
-                "label": {
-                    "type": "string"
-                },
                 "type": {
                     "const": "checkboxGroup"
-                },
-                "dataRef": {
-                    "type": "string"
-                },
-                "format": {
-                    "$ref": "#/$defs/Format"
                 },
                 "options": {
                     "type": "array",
@@ -304,33 +294,23 @@
         },
         "RepeatingGroupField": {
             "description": "A template of sub-fields stamped once per item in an array resolved by dataRef.",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/BaseField"
+                }
+            ],
             "type": "object",
-            "additionalProperties": false,
+            "unevaluatedProperties": false,
             "required": [
-                "fieldId",
                 "type",
                 "position",
-                "dataRef",
                 "maxInstances",
                 "rowHeight",
                 "template"
             ],
             "properties": {
-                "fieldId": {
-                    "type": "string"
-                },
-                "label": {
-                    "type": "string"
-                },
                 "type": {
                     "const": "repeatingGroup"
-                },
-                "position": {
-                    "$ref": "#/$defs/Position"
-                },
-                "dataRef": {
-                    "type": "string",
-                    "description": "Should resolve to an array, typically using a JSONPath wildcard, e.g. $.taxpayer.employment.w2s[0].box12[*]"
                 },
                 "maxInstances": {
                     "type": "integer",
