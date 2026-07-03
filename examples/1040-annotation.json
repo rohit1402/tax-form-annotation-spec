@@ -1,0 +1,279 @@
+{
+    "formId": "irs-1040-2025",
+    "formVersion": "2025",
+    "pageDetails": {
+        "width": 612,
+        "height": 792,
+        "unit": "pt",
+        "origin": "top-left"
+    },
+    "fields": [
+        {
+            "fieldId": "1040-filing-status",
+            "label": "Filing Status - Check only one box",
+            "type": "checkboxGroup",
+            "dataRef": "$.taxpayer.filingStatus",
+            "format": {
+                "checkedSymbol": "X"
+            },
+            "options": [
+                {
+                    "matchValue": "single",
+                    "position": {
+                        "page": 1,
+                        "x": 50,
+                        "y": 150,
+                        "width": 8,
+                        "height": 8
+                    }
+                },
+                {
+                    "matchValue": "mfj",
+                    "position": {
+                        "page": 1,
+                        "x": 50,
+                        "y": 162,
+                        "width": 8,
+                        "height": 8
+                    }
+                },
+                {
+                    "matchValue": "mfs",
+                    "position": {
+                        "page": 1,
+                        "x": 50,
+                        "y": 174,
+                        "width": 8,
+                        "height": 8
+                    }
+                },
+                {
+                    "matchValue": "hoh",
+                    "position": {
+                        "page": 1,
+                        "x": 50,
+                        "y": 186,
+                        "width": 8,
+                        "height": 8
+                    }
+                },
+                {
+                    "matchValue": "qss",
+                    "position": {
+                        "page": 1,
+                        "x": 50,
+                        "y": 198,
+                        "width": 8,
+                        "height": 8
+                    }
+                }
+            ]
+        },
+        {
+            "fieldId": "1040-dependents",
+            "label": "Dependents - name, SSN, relationship, and credit checkboxes (up to 4 shown on form)",
+            "type": "repeatingGroup",
+            "dataRef": "$.taxpayer.dependents[*]",
+            "maxInstances": 4,
+            "rowHeight": 14.0,
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 260.0,
+                "width": 480.0,
+                "height": 14.0
+            },
+            "template": [
+                {
+                    "fieldId": "firstLastName",
+                    "dataRef": "fullName",
+                    "format": {
+                        "style": "plain"
+                    },
+                    "offsetX": 0
+                },
+                {
+                    "fieldId": "ssn",
+                    "dataRef": "ssn",
+                    "format": {
+                        "style": "ssn"
+                    },
+                    "offsetX": 150
+                },
+                {
+                    "fieldId": "relationship",
+                    "dataRef": "relationship",
+                    "format": {
+                        "style": "plain"
+                    },
+                    "offsetX": 260
+                },
+                {
+                    "fieldId": "childTaxCredit",
+                    "dataRef": "childTaxCreditEligible",
+                    "format": {
+                        "style": "checkmark",
+                        "checkedSymbol": "X"
+                    },
+                    "offsetX": 380
+                },
+                {
+                    "fieldId": "creditForOtherDependents",
+                    "dataRef": "otherDependentCreditEligible",
+                    "format": {
+                        "style": "checkmark",
+                        "checkedSymbol": "X"
+                    },
+                    "offsetX": 420
+                }
+            ]
+        },
+        {
+            "fieldId": "1040-line1a-wages",
+            "label": "Line 1a - Total amount from Form(s) W-2, box 1",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 480,
+                "y": 400,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "sum($.taxpayer.employment.w2s[*].box1)"
+        },
+        {
+            "fieldId": "1040-line1z-total-wages",
+            "label": "Line 1z - Add lines 1a through 1h",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 480,
+                "y": 470,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.computed.line1z"
+        },
+        {
+            "fieldId": "1040-line9-total-income",
+            "label": "Line 9 - Total income",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 480,
+                "y": 560,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.computed.line9"
+        },
+        {
+            "fieldId": "1040-line11a-agi",
+            "label": "Line 11a - Adjusted gross income",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 480,
+                "y": 600,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.computed.line11a"
+        },
+        {
+            "fieldId": "1040-line25a-w2-withholding",
+            "label": "Line 25a - Federal income tax withheld from Form(s) W-2",
+            "type": "currency",
+            "position": {
+                "page": 2,
+                "x": 480,
+                "y": 300,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "sum($.taxpayer.employment.w2s[*].box2)"
+        },
+        {
+            "fieldId": "1040-line34-overpaid",
+            "label": "Line 34 - Amount overpaid",
+            "type": "currency",
+            "position": {
+                "page": 2,
+                "x": 480,
+                "y": 500,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.computed.line34"
+        },
+        {
+            "fieldId": "1040-line37-amount-owed",
+            "label": "Line 37 - Amount you owe",
+            "type": "currency",
+            "position": {
+                "page": 2,
+                "x": 480,
+                "y": 560,
+                "width": 90,
+                "height": 14
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.computed.line37"
+        }
+    ]
+}

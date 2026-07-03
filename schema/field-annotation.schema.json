@@ -1,0 +1,366 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://com.example/schemas/field-annotation.schema.json",
+    "title": "Tax Form Field Annotation Specification",
+    "description": "Schema for an annotation file describing where values go on a tax form, how they are formatted, and which nested data they reference.",
+    "type": "object",
+    "required": [
+        "formId",
+        "formVersion",
+        "pageDetails",
+        "fields"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "formId": {
+            "type": "string",
+            "description": "Unique identifier for the form template (e.g. irs-w2-2025, irs-1040-2025)"
+        },
+        "formVersion": {
+            "type": "string",
+            "description": "Tax year / revision, since forms change annually"
+        },
+        "pageDetails": {
+            "$ref": "#/$defs/PageSize"
+        },
+        "fields": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/FieldAnnotation"
+            }
+        }
+    },
+    "$defs": {
+        "Unit": {
+            "type": "string",
+            "enum": [
+                "pt",
+                "in",
+                "mm",
+                "px"
+            ]
+        },
+        "Origin": {
+            "type": "string",
+            "enum": [
+                "top-left",
+                "bottom-left"
+            ]
+        },
+        "PageDetails": {
+            "type": "object",
+            "required": [
+                "width",
+                "height",
+                "unit",
+                "origin"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "width": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "unit": {
+                    "$ref": "#/$defs/Unit"
+                },
+                "origin": {
+                    "$ref": "#/$defs/Origin"
+                }
+            }
+        },
+        "Position": {
+            "type": "object",
+            "required": [
+                "page",
+                "x",
+                "y",
+                "width",
+                "height"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "width": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "height": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                }
+            }
+        },
+        "Format": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "style": {
+                    "type": "string",
+                    "enum": [
+                        "plain",
+                        "currency",
+                        "percent",
+                        "date",
+                        "ssn",
+                        "ein",
+                        "checkmark"
+                    ]
+                },
+                "decimalPlaces": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "thousandsSeparator": {
+                    "type": "boolean"
+                },
+                "negativeStyle": {
+                    "type": "string",
+                    "enum": [
+                        "minus",
+                        "parentheses"
+                    ]
+                },
+                "dateFormat": {
+                    "type": "string"
+                },
+                "align": {
+                    "type": "string",
+                    "enum": [
+                        "left",
+                        "right",
+                        "center"
+                    ]
+                },
+                "fontSize": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "maxLines": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "checkedSymbol": {
+                    "type": "string"
+                }
+            }
+        },
+        "CheckboxOption": {
+            "type": "object",
+            "required": [
+                "matchValue",
+                "position"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "matchValue": {
+                    "type": "string",
+                    "description": "Value compared against the value resolved by the parent field's dataRef. If they match, this option is marked."
+                },
+                "position": {
+                    "$ref": "#/$defs/Position"
+                }
+            }
+        },
+        "TemplateField": {
+            "type": "object",
+            "required": [
+                "fieldId",
+                "dataRef"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "fieldId": {
+                    "type": "string"
+                },
+                "dataRef": {
+                    "type": "string",
+                    "description": "Resolved relative to the current array item, not the document root."
+                },
+                "format": {
+                    "$ref": "#/$defs/Format"
+                },
+                "offsetX": {
+                    "type": "number",
+                    "default": 0
+                }
+            }
+        },
+        "BaseField": {
+            "type": "object",
+            "required": [
+                "fieldId",
+                "type",
+                "position",
+                "dataRef"
+            ],
+            "properties": {
+                "fieldId": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Human-readable description; documentation only, not rendered."
+                },
+                "position": {
+                    "$ref": "#/$defs/Position"
+                },
+                "dataRef": {
+                    "type": "string",
+                    "description": "JSONPath-style reference into the taxpayer data set. May be wrapped in sum(), count(), or first() for aggregation."
+                }
+            }
+        },
+        "SimpleField": {
+            "description": "text, currency, number, date, or checkbox fields — use exactly the base shape, no additional properties.",
+            "allOf": [
+                {
+                    "$ref": "#/$defs/BaseField"
+                }
+            ],
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "fieldId",
+                "type",
+                "position",
+                "dataRef"
+            ],
+            "properties": {
+                "fieldId": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "text",
+                        "currency",
+                        "number",
+                        "date",
+                        "checkbox"
+                    ]
+                },
+                "position": {
+                    "$ref": "#/$defs/Position"
+                },
+                "format": {
+                    "$ref": "#/$defs/Format"
+                },
+                "dataRef": {
+                    "type": "string"
+                }
+            }
+        },
+        "CheckboxGroupField": {
+            "description": "Mutually-exclusive checkbox options; one dataRef resolved once against a list of matchValues.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "fieldId",
+                "type",
+                "dataRef",
+                "options"
+            ],
+            "properties": {
+                "fieldId": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "checkboxGroup"
+                },
+                "dataRef": {
+                    "type": "string"
+                },
+                "format": {
+                    "$ref": "#/$defs/Format"
+                },
+                "options": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/$defs/CheckboxOption"
+                    }
+                }
+            }
+        },
+        "RepeatingGroupField": {
+            "description": "A template of sub-fields stamped once per item in an array resolved by dataRef.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "fieldId",
+                "type",
+                "position",
+                "dataRef",
+                "maxInstances",
+                "rowHeight",
+                "template"
+            ],
+            "properties": {
+                "fieldId": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "repeatingGroup"
+                },
+                "position": {
+                    "$ref": "#/$defs/Position"
+                },
+                "dataRef": {
+                    "type": "string",
+                    "description": "Should resolve to an array, typically using a JSONPath wildcard, e.g. $.taxpayer.employment.w2s[0].box12[*]"
+                },
+                "maxInstances": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "rowHeight": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "template": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/$defs/TemplateField"
+                    }
+                }
+            }
+        },
+        "FieldAnnotation": {
+            "oneOf": [
+                {
+                    "$ref": "#/$defs/SimpleField"
+                },
+                {
+                    "$ref": "#/$defs/CheckboxGroupField"
+                },
+                {
+                    "$ref": "#/$defs/RepeatingGroupField"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,395 @@
+{
+    "formId": "irs-w2-2025",
+    "formVersion": "2025",
+    "pageDetails": {
+        "width": 612,
+        "height": 792,
+        "unit": "pt",
+        "origin": "top-left"
+    },
+    "fields": [
+        {
+            "fieldId": "w2-box-a-ssn",
+            "label": "Box a - Employee's social security number",
+            "type": "text",
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 60,
+                "width": 120,
+                "height": 14
+            },
+            "format": {
+                "style": "ssn",
+                "align": "left",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.ssn"
+        },
+        {
+            "fieldId": "w2-box-b-ein",
+            "label": "Box b - Employer identification number (EIN)",
+            "type": "text",
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 78,
+                "width": 120,
+                "height": 14
+            },
+            "format": {
+                "style": "ein",
+                "align": "left",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].employerEin"
+        },
+        {
+            "fieldId": "w2-box-c-employer-name-address",
+            "label": "Box c - Employer's name, address, and ZIP code",
+            "type": "text",
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 96,
+                "width": 220,
+                "height": 40
+            },
+            "format": {
+                "style": "plain",
+                "align": "left",
+                "fontSize": 9,
+                "maxLines": 3
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].employerNameAddress"
+        },
+        {
+            "fieldId": "w2-box-e-employee-name",
+            "label": "Box e - Employee's first name and initial, last name",
+            "type": "text",
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 140,
+                "width": 220,
+                "height": 14
+            },
+            "format": {
+                "style": "plain",
+                "align": "left",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.fullName"
+        },
+        {
+            "fieldId": "w2-box-f-employee-address",
+            "label": "Box f - Employee's address and ZIP code",
+            "type": "text",
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 158,
+                "width": 220,
+                "height": 28
+            },
+            "format": {
+                "style": "plain",
+                "align": "left",
+                "fontSize": 9,
+                "maxLines": 2
+            },
+            "dataRef": "$.taxpayer.address"
+        },
+        {
+            "fieldId": "w2-box1-wages",
+            "label": "Box 1 - Wages, tips, other compensation",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 88.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box1"
+        },
+        {
+            "fieldId": "w2-box2-fed-tax-withheld",
+            "label": "Box 2 - Federal income tax withheld",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 104.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box2"
+        },
+        {
+            "fieldId": "w2-box3-ss-wages",
+            "label": "Box 3 - Social security wages",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 120.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box3"
+        },
+        {
+            "fieldId": "w2-box4-ss-tax-withheld",
+            "label": "Box 4 - Social security tax withheld",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 136.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box4"
+        },
+        {
+            "fieldId": "w2-box5-medicare-wages",
+            "label": "Box 5 - Medicare wages and tips",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 152.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box5"
+        },
+        {
+            "fieldId": "w2-box6-medicare-tax-withheld",
+            "label": "Box 6 - Medicare tax withheld",
+            "type": "currency",
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 168.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "format": {
+                "style": "currency",
+                "decimalPlaces": 2,
+                "thousandsSeparator": true,
+                "negativeStyle": "parentheses",
+                "align": "right",
+                "fontSize": 9
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].box6"
+        },
+        {
+            "fieldId": "w2-box13-statutory-employee",
+            "label": "Box 13 - Statutory employee",
+            "type": "checkbox",
+            "position": {
+                "page": 1,
+                "x": 300,
+                "y": 234,
+                "width": 10,
+                "height": 10
+            },
+            "format": {
+                "style": "checkmark",
+                "checkedSymbol": "X"
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].statutoryEmployee"
+        },
+        {
+            "fieldId": "w2-box13-retirement-plan",
+            "label": "Box 13 - Retirement plan",
+            "type": "checkbox",
+            "position": {
+                "page": 1,
+                "x": 300,
+                "y": 250,
+                "width": 10,
+                "height": 10
+            },
+            "format": {
+                "style": "checkmark",
+                "checkedSymbol": "X"
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].retirementPlan"
+        },
+        {
+            "fieldId": "w2-box13-third-party-sick-pay",
+            "label": "Box 13 - Third-party sick pay",
+            "type": "checkbox",
+            "position": {
+                "page": 1,
+                "x": 300,
+                "y": 266,
+                "width": 10,
+                "height": 10
+            },
+            "format": {
+                "style": "checkmark",
+                "checkedSymbol": "X"
+            },
+            "dataRef": "$.taxpayer.employment.w2s[0].thirdPartySickPay"
+        },
+        {
+            "fieldId": "w2-box12-codes",
+            "label": "Box 12a-12d - Codes and amounts (e.g. D, DD, W)",
+            "type": "repeatingGroup",
+            "dataRef": "$.taxpayer.employment.w2s[0].box12[*]",
+            "maxInstances": 4,
+            "rowHeight": 14.0,
+            "position": {
+                "page": 1,
+                "x": 412.5,
+                "y": 300.0,
+                "width": 90.0,
+                "height": 14.0
+            },
+            "template": [
+                {
+                    "fieldId": "code",
+                    "dataRef": "code",
+                    "format": {
+                        "style": "plain"
+                    },
+                    "offsetX": 0
+                },
+                {
+                    "fieldId": "amount",
+                    "dataRef": "amount",
+                    "format": {
+                        "style": "currency",
+                        "decimalPlaces": 2,
+                        "thousandsSeparator": true
+                    },
+                    "offsetX": 20
+                }
+            ]
+        },
+        {
+            "fieldId": "w2-boxes15-20-state-local",
+            "label": "Boxes 15-20 - State/local wages and tax (repeats per state)",
+            "type": "repeatingGroup",
+            "dataRef": "$.taxpayer.employment.w2s[0].stateLocal[*]",
+            "maxInstances": 2,
+            "rowHeight": 16.0,
+            "position": {
+                "page": 1,
+                "x": 40,
+                "y": 400.0,
+                "width": 400.0,
+                "height": 16.0,
+                "unit": "pt",
+                "origin": "top-left"
+            },
+            "template": [
+                {
+                    "fieldId": "state",
+                    "dataRef": "state",
+                    "format": {
+                        "style": "plain"
+                    },
+                    "offsetX": 0
+                },
+                {
+                    "fieldId": "employerStateId",
+                    "dataRef": "employerStateId",
+                    "format": {
+                        "style": "plain"
+                    },
+                    "offsetX": 30
+                },
+                {
+                    "fieldId": "stateWages",
+                    "dataRef": "stateWages",
+                    "format": {
+                        "style": "currency",
+                        "decimalPlaces": 2,
+                        "thousandsSeparator": true,
+                        "align": "right"
+                    },
+                    "offsetX": 100
+                },
+                {
+                    "fieldId": "stateIncomeTax",
+                    "dataRef": "stateIncomeTax",
+                    "format": {
+                        "style": "currency",
+                        "decimalPlaces": 2,
+                        "thousandsSeparator": true,
+                        "align": "right"
+                    },
+                    "offsetX": 190
+                },
+                {
+                    "fieldId": "localWages",
+                    "dataRef": "localWages",
+                    "format": {
+                        "style": "currency",
+                        "decimalPlaces": 2,
+                        "thousandsSeparator": true,
+                        "align": "right"
+                    },
+                    "offsetX": 280
+                },
+                {
+                    "fieldId": "localIncomeTax",
+                    "dataRef": "localIncomeTax",
+                    "format": {
+                        "style": "currency",
+                        "decimalPlaces": 2,
+                        "thousandsSeparator": true,
+                        "align": "right"
+                    },
+                    "offsetX": 340
+                }
+            ]
+        }
+    ]
+}
